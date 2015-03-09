@@ -1,0 +1,13 @@
+<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.brunolima.mocklocationservice.activity.MainActivity">
+
+    <android.support.v4.view.PagerTabStrip
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0fffffff"/>
+</android.support.v4.view.ViewPager>
