@@ -29,7 +29,7 @@ import br.com.brunodelima.mocklocation.socket.StringProtocol;
 public class LocationService extends Service {
 
     private static final String TAG = "SocketService";
-    public static final String PROVIDER = "br/com/brunolima/socket";
+    public static final String PROVIDER = "socket";
     Protocol protocol = new StringProtocol() {
 
         @Override
@@ -135,6 +135,8 @@ public class LocationService extends Service {
 
     @Override
     public void onDestroy() {
+        locationManager.removeTestProvider(PROVIDER);
+
         if (socketServer != null)
             socketServer.interrupt();
         getNotificationManager().cancel(NOTIFICATION_ID);
@@ -177,7 +179,7 @@ public class LocationService extends Service {
 
     private static class GoogleMapsUrlMessageResolver extends MessageResolver {
 
-        private static final String REGEX = "https?.*google.*\\@(.*?)\\?";
+        private static final String REGEX = "https?.*google.*\\@(.*)";
         private static final Pattern pattern = Pattern.compile(REGEX);
 
         @Override

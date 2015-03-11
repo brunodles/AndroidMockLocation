@@ -24,7 +24,7 @@ import br.com.brunodelima.mocklocation.service.LocationService;
 /**
  * Created by dev on 07/01/2015.
  */
-public class InfoFragment extends Fragment {
+public class InfoFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "InfoFragment";
 
@@ -33,24 +33,6 @@ public class InfoFragment extends Fragment {
     private Button stopService;
     private TextView mockLocationStatus;
     private Button enableMockLocations;
-    private View.OnClickListener onStartClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onStartClick();
-        }
-    };
-    private View.OnClickListener onStopClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onStopClick();
-        }
-    };
-    private View.OnClickListener onEnableClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onEnableClick();
-        }
-    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,12 +43,16 @@ public class InfoFragment extends Fragment {
         mockLocationStatus = (TextView) view.findViewById(R.id.mockLocationStatus);
         enableMockLocations = (Button) view.findViewById(R.id.enableMockLocations);
 
-        startService.setOnClickListener(onStartClickListener);
-        stopService.setOnClickListener(onStopClickListener);
-        enableMockLocations.setOnClickListener(onEnableClickListener);
-
+        startService.setOnClickListener(this);
+        stopService.setOnClickListener(this);
+        enableMockLocations.setOnClickListener(this);
 
         return view;
+    }
+
+    private boolean isMockLocationEnabled() {
+        return Settings.Secure.getString(getActivity().getContentResolver(),
+                Settings.Secure.ALLOW_MOCK_LOCATION).equals("1");
     }
 
     @Override
@@ -82,6 +68,9 @@ public class InfoFragment extends Fragment {
         WifiManager wm = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
         String myIpAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
         ip.setText(myIpAddress);
+
+        if (isMockLocationEnabled())
+            enableMockLocations.setVisibility(View.GONE);
     }
 
     public void onStartClick() {
@@ -101,5 +90,16 @@ public class InfoFragment extends Fragment {
     private void onEnableClick() {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
         startActivityForResult(intent, 0);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (startService == v)
+            onStartClick();
+        else if (stopService == v)
+            onStopClick();
+        else if (enableMockLocations == v)
+            onEnableClick();
+
     }
 }

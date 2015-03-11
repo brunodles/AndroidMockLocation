@@ -95,9 +95,15 @@ public class MapFragment extends SupportMapFragment {
         updateMarkers();
 //        addProviderMarker(LocationManager.PASSIVE_PROVIDER, BitmapDescriptorFactory.HUE_YELLOW);
 
+        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+        if (lastKnownLocation != null)
+            animateMapCameraTo(lastKnownLocation);
+    }
+
+    private void animateMapCameraTo(Location lastKnownLocation) {
         CameraUpdate cameraUpdate = CameraUpdateFactory
                 .newLatLngZoom(
-                        locationToLatLng(locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)),
+                        locationToLatLng(lastKnownLocation),
                         17);
         mMap.animateCamera(cameraUpdate);
     }
@@ -122,6 +128,13 @@ public class MapFragment extends SupportMapFragment {
         }
     }
 
+    private void tryToRemoveTestProvider(String provider) {
+        try {
+            locationManager.removeTestProvider(provider);
+        } catch (Exception e) {
+            Log.e(TAG, "tryToRemoveTestProvider ", e);
+        }
+    }
 
     private com.google.android.gms.maps.model.Marker addProviderMarker(String provider, float hue) {
         Location lastKnownLocation = locationManager.getLastKnownLocation(provider);
