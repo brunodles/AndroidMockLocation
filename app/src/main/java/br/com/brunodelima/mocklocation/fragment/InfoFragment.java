@@ -69,8 +69,12 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         String myIpAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
         ip.setText(myIpAddress);
 
-        if (isMockLocationEnabled())
-            enableMockLocations.setVisibility(View.GONE);
+        boolean mockLocationEnabled = isMockLocationEnabled();
+        enableMockLocations.setVisibility(mockLocationEnabled ? View.GONE : View.VISIBLE);
+//        startService.setClickable(!mockLocationEnabled);
+        startService.setEnabled(mockLocationEnabled);
+//        stopService.setClickable(!mockLocationEnabled);
+        stopService.setEnabled(mockLocationEnabled);
     }
 
     public void onStartClick() {
