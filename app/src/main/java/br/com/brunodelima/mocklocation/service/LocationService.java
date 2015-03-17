@@ -17,11 +17,13 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import br.com.brunodelima.mocklocation.R;
 import br.com.brunodelima.mocklocation.activity.MainActivity;
+import br.com.brunodelima.mocklocation.socket.Broadcast;
 import br.com.brunodelima.mocklocation.socket.Protocol;
 import br.com.brunodelima.mocklocation.socket.SocketServer;
 import br.com.brunodelima.mocklocation.socket.StringProtocol;
@@ -55,6 +57,7 @@ public class LocationService extends Service {
     //    public static final String PROVIDER = LocationManager.GPS_PROVIDER;
     private static final int NOTIFICATION_ID = 1000;
     private SocketServer socketServer;
+    private Broadcast.Server broadcastServer;
     private LocationManager locationManager;
 
     private static Location locationFromString(String message) {
@@ -94,7 +97,13 @@ public class LocationService extends Service {
             socketServer.start();
             Log.d(TAG, "onCreate serverStarted");
         } catch (IOException e) {
-            Log.e(TAG, "onCreate ", e);
+            Log.e(TAG, "onCreate error on start socket server", e);
+        }
+        try {
+            broadcastServer = Broadcast.getNewServer("locations", "230.0.0.1", 30122);
+            broadcastServer.start();
+        } catch (SocketException e) {
+            Log.e(TAG, "onCreate error on start broadcast server", e);
         }
     }
 
