@@ -2,8 +2,7 @@ package br.com.brunodelima.mocklocation.service;
 
 import android.util.Log;
 
-import br.com.brunodelima.mocklocation.socket.StringProtocol;
-
+import br.com.brunodelima.socket.StringProtocol;
 
 /**
  * Created by bruno on 06/01/15.

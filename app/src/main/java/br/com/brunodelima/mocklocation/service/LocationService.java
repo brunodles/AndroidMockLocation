@@ -8,9 +8,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -23,15 +21,20 @@ import java.util.regex.Pattern;
 
 import br.com.brunodelima.mocklocation.R;
 import br.com.brunodelima.mocklocation.activity.MainActivity;
-import br.com.brunodelima.mocklocation.socket.Broadcast;
-import br.com.brunodelima.mocklocation.socket.Protocol;
-import br.com.brunodelima.mocklocation.socket.SocketServer;
-import br.com.brunodelima.mocklocation.socket.StringProtocol;
+import br.com.brunodelima.socket.Broadcast;
+import br.com.brunodelima.socket.Protocol;
+import br.com.brunodelima.socket.SocketServer;
+import br.com.brunodelima.socket.StringProtocol;
 
 public class LocationService extends Service {
 
-    private static final String TAG = "SocketService";
     public static final String PROVIDER = "socket";
+    private static final String TAG = "SocketService";
+    //    public static final String PROVIDER = LocationManager.GPS_PROVIDER;
+    private static final int NOTIFICATION_ID = 1000;
+    private SocketServer socketServer;
+    private Broadcast.Server broadcastServer;
+    private LocationManager locationManager;
     Protocol protocol = new StringProtocol() {
 
         @Override
@@ -54,11 +57,6 @@ public class LocationService extends Service {
             return "QUIT".equalsIgnoreCase(message);
         }
     };
-    //    public static final String PROVIDER = LocationManager.GPS_PROVIDER;
-    private static final int NOTIFICATION_ID = 1000;
-    private SocketServer socketServer;
-    private Broadcast.Server broadcastServer;
-    private LocationManager locationManager;
 
     private static Location locationFromString(String message) {
         String[] split = message.split(",");
