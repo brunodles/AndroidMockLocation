@@ -26,8 +26,6 @@ import java.util.List;
  */
 public final class Broadcast {
 
-    private static final int ONE_SECOND = 1000;
-
     private static Cliente getBroadCastClientThread(int port, String group, final String pass, int timeout) throws UnknownHostException, IOException {
         //        String result = "";
         MulticastSocket socket = new MulticastSocket(port);
@@ -36,12 +34,10 @@ public final class Broadcast {
         Cliente thread = new Cliente(pass, socket);
         thread.start();
         try {
-            Thread.sleep(timeout * ONE_SECOND);
+            Thread.sleep(timeout);
         } catch (InterruptedException ex) {
         }
-        //        System.out.println("PreparaMudarC5anRun");
         thread.setCanRun(false);
-        //        System.out.println("Mudou");
         socket.leaveGroup(address);
         socket.close();
         return thread;
@@ -216,7 +212,7 @@ public final class Broadcast {
 
         protected DatagramSocket socket = null;
         protected boolean waitClients = true;
-        private long waitTime = ONE_SECOND * 5;
+        private long waitTime = 5000;
         String pass;
         String group = "";
         int port;
