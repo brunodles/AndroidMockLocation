@@ -1,4 +1,4 @@
-package br.com.brunodelima.socket.test;
+package br.com.brunodelima.mocklocation.cli;
 
 import java.io.IOException;
 
