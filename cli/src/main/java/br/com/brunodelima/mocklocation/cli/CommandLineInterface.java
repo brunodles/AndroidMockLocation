@@ -5,11 +5,22 @@ import java.util.List;
 /**
  * Created by bruno on 04/04/15.
  */
-public interface CommandLineInterface {
+public class CommandLineInterface implements Executable{
 
-    List<String> findDevices();
+//    List<String> findDevices();
+//
+//    void useDevice(int index);
+//
+//    void sendLocation(String location);
 
-    void useDevice(int index);
+    Executable chain;
 
-    void sendLocation(String location);
+    public CommandLineInterface() {
+        // TODO build the chain
+    }
+
+    @Override
+    public void execute(String text) {
+        chain.execute(text);
+    }
 }
