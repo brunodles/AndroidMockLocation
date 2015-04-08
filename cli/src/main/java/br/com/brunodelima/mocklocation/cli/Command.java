@@ -30,22 +30,27 @@ abstract class Command implements Executable {
     private ArrayList<String> getGroups(Matcher matcher) {
         int count = matcher.groupCount();
         ArrayList<String> params = new ArrayList<>();
-        for (int i = 1; i < count; i++)
+        for (int i = 1; i <= count; i++)
             params.add(matcher.group(i));
         return params;
     }
 
     protected abstract void run(ArrayList<String> matcher);
 
-    protected void print(String string){
+    protected void print(String string) {
         System.out.println(string);
     }
 
-    protected void print(String string, Object... objects){
+    protected void print(String string, Object... objects) {
         System.out.printf(string, objects);
     }
 
-    protected void print(Throwable throwable){
+    protected void print(Throwable throwable) {
         throwable.printStackTrace(System.err);
+    }
+
+    public Command next(Command next) {
+        this.next = next;
+        return next;
     }
 }
