@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 /**
  * Created by bruno on 07/04/15.
  */
-abstract class Command implements Executable, Describable {
+public abstract class Command implements Executable, Describable {
 
     protected String regex;
     protected Pattern pattern;
