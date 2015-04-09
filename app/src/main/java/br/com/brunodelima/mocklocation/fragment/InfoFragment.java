@@ -1,6 +1,7 @@
 package br.com.brunodelima.mocklocation.fragment;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
@@ -69,12 +70,7 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
         String myIpAddress = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
         ip.setText(myIpAddress);
 
-        boolean mockLocationEnabled = isMockLocationEnabled();
-        enableMockLocations.setVisibility(mockLocationEnabled ? View.GONE : View.VISIBLE);
-//        startService.setClickable(!mockLocationEnabled);
-        startService.setEnabled(mockLocationEnabled);
-//        stopService.setClickable(!mockLocationEnabled);
-        stopService.setEnabled(mockLocationEnabled);
+        updateVisibility();
     }
 
     public void onStartClick() {
@@ -104,6 +100,23 @@ public class InfoFragment extends Fragment implements View.OnClickListener {
             onStopClick();
         else if (enableMockLocations == v)
             onEnableClick();
+        updateVisibility();
+    }
 
+    private void updateVisibility() {
+        boolean mockLocationEnabled = isMockLocationEnabled();
+        boolean serviceRunning = isMyServiceRunning(LocationService.class, getActivity());
+        enableMockLocations.setVisibility(mockLocationEnabled ? View.GONE : View.VISIBLE);
+        startService.setEnabled(!serviceRunning && mockLocationEnabled);
+        stopService.setEnabled(serviceRunning && mockLocationEnabled);
+    }
+
+
+    private boolean isMyServiceRunning(Class<?> serviceClass, Context context) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE))
+            if (serviceClass.getName().equals(service.service.getClassName()))
+                return true;
+        return false;
     }
 }
