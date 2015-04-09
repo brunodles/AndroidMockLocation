@@ -23,7 +23,6 @@ public class HelpCommand extends Command {
 
     @Override
     protected void run(ArrayList<String> matcher) {
-        // TODO show all commands descriptions
         for (Describable describable : describableList)
             print("%s\n    %s\n",describable.getRegex(),describable.getDescription());
     }

@@ -7,18 +7,11 @@ import java.util.Scanner;
  */
 public class CommandLineInterface implements Executable {
 
-//    List<String> findDevices();
-//
-//    void useDevice(int index);
-//
-//    void sendLocation(String location);
-
     private final HelpCommand helpCommand;
     private Command last;
     private Command first;
 
     public CommandLineInterface() {
-        // TODO build the last
         helpCommand = new HelpCommand();
         addToChain(new FindDevicesCommand());
         addToChain(new UseDeviceCommand());
@@ -26,7 +19,6 @@ public class CommandLineInterface implements Executable {
     }
 
     public static void main(String[] args) {
-        System.out.println("Test ChainOfResponsibility");
         Scanner sc = new Scanner(System.in);
         CommandLineInterface cli = new CommandLineInterface();
         while (true) {
