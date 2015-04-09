@@ -13,14 +13,16 @@ public class CommandLineInterface implements Executable {
 //
 //    void sendLocation(String location);
 
-    Command chain;
+    private final HelpCommand helpCommand;
+    private Command last;
+    private Command first;
 
     public CommandLineInterface() {
-        // TODO build the chain
-        chain = new HelpCommand();
-        chain.next(new FindDevicesCommand())
-                .next(new UseDeviceCommand());
-//                .next()
+        // TODO build the last
+        helpCommand = new HelpCommand();
+        addToChain(new FindDevicesCommand());
+        addToChain(new UseDeviceCommand());
+        addToChain(helpCommand);
     }
 
     public static void main(String[] args) {
@@ -33,8 +35,18 @@ public class CommandLineInterface implements Executable {
         }
     }
 
+    private void addToChain(Command command) {
+        helpCommand.addDescribable(command);
+        if (last == null)
+            last = command;
+        else
+            last = last.next(command);
+        if (first == null)
+            first = command;
+    }
+
     @Override
     public void execute(String text) {
-        chain.execute(text);
+        first.execute(text);
     }
 }

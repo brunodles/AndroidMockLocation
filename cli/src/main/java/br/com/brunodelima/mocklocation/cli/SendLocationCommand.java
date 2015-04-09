@@ -16,4 +16,9 @@ public class SendLocationCommand extends Command {
         // TODO send location to selected device
         print("Run send location");
     }
+
+    @Override
+    public String getDescription() {
+        return "Send locations to selected device.";
+    }
 }

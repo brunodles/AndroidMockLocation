@@ -17,4 +17,9 @@ public class UseDeviceCommand extends Command {
         print("Selected "+index);
         // TODO need to save selected index
     }
+
+    @Override
+    public String getDescription() {
+        return "Select one device to send locations update.";
+    }
 }

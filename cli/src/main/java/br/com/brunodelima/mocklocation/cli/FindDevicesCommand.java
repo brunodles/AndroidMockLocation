@@ -48,4 +48,9 @@ public class FindDevicesCommand extends Command {
     private void showEmptyMessage() {
         print("Device not found.");
     }
+
+    @Override
+    public String getDescription() {
+        return "Search for every device running mocklocation service in your LAN.";
+    }
 }
