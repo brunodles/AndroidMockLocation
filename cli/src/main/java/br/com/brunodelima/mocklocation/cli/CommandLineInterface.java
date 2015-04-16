@@ -1,7 +1,6 @@
 package br.com.brunodelima.mocklocation.cli;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 import br.com.brunodelima.mocklocation.cli.commands.FindDevicesCommand;
 import br.com.brunodelima.mocklocation.cli.commands.HelpCommand;
@@ -30,15 +29,6 @@ public class CommandLineInterface implements Executable {
         addToChain(new SendLocationCommand(properties));
         addToChain(new SelectedCommand(properties));
         addToChain(helpCommand);
-    }
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        CommandLineInterface cli = new CommandLineInterface();
-        while (true) {
-            String next = sc.nextLine();
-            cli.execute(next);
-        }
     }
 
     private void addToChain(Command command) {
