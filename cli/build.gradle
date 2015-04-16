@@ -7,6 +7,15 @@ sourceCompatibility = 1.7
 targetCompatibility = 1.7
 version = '1.0'
 
+jar {
+    manifest {
+        attributes("Implementation-Title": "Gradle",
+                "Implementation-Version": version,
+        "Main-Class": mainClassName)
+
+    }
+}
+
 dependencies {
     //testCompile 'junit:junit:4.12'
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -17,9 +26,7 @@ task clearJar(type: Delete) {
     delete 'build/libs/cli.jar'
 }
 
-task makeJar(type: Copy) {
-    from('build/classes/')
-    into('build/libs/')
-    include('classes.jar')
-    rename ('classes.jar', 'cli.jar')
+task makeJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allJava
 }
