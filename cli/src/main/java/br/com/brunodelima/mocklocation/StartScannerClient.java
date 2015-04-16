@@ -13,6 +13,7 @@ public class StartScannerClient {
         Scanner sc = new Scanner(System.in);
         CommandLineInterface cli = new CommandLineInterface();
         while (true) {
+            System.out.print(">");
             String next = sc.nextLine();
             cli.execute(next);
         }
