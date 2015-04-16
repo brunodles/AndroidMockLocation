@@ -11,20 +11,20 @@ import br.com.brunodelima.socket.SocketClient;
 /**
  * Created by bruno on 06/01/15.
  */
-public class StartClient {
+public class StartOldClient {
 
     private String ip = "192.168.25.81";
     private int port = 30123;
 
     public static void main(String[] args) {
         System.out.println("Initializing");
-        StartClient startClient = new StartClient();
+        StartOldClient startOldClient = new StartOldClient();
         try {
             System.out.println("Try to find devices");
-            startClient.findServer();
+            startOldClient.findServer();
         } catch (Exception e) {
         }
-        startClient.console();
+        startOldClient.console();
     }
 
     public void console() {
