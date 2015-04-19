@@ -14,23 +14,31 @@ import br.com.brunodelima.socket.Broadcast;
  */
 public class FindDevicesCommand extends PropertyCommand {
 
+    public static final int DEFAULT_DELAY = 5000;
+
     public FindDevicesCommand(Properties properties) {
-        super("find|list", properties);
+        super("(?:find|list)(?: (\\d+))?", properties);
     }
 
     @Override
     protected void run(ArrayList<String> matcher) {
+        List<InetAddress> addresses;
         try {
-            List<InetAddress> addresses = tryToFindDevices();
+            if ((matcher.size() > 0) && (null != matcher.get(0)))
+                addresses = tryToFindDevices(Integer.valueOf(matcher.get(0)));
+            else
+                addresses = tryToFindDevices(DEFAULT_DELAY);
             print(addresses);
             updateProperties(addresses);
+        } catch (NumberFormatException e) {
+            System.err.println("Wrong parameter value.");
         } catch (IOException e) {
             e.printStackTrace(System.err);
         }
     }
 
-    private List<InetAddress> tryToFindDevices() throws IOException {
-        return Broadcast.getServerAdresses("locations", "230.0.0.1", 30122, 5000);
+    private List<InetAddress> tryToFindDevices(int delay) throws IOException {
+        return Broadcast.getServerAdresses("locations", "230.0.0.1", 30122, delay);
     }
 
     private void print(List<InetAddress> addresses) {
