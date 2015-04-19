@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 #echo $*
 #java -cp ./cli/builds/lib/cli.jar br.com.brunodelima.mocklocation.StartCLI $*
-java -jar ./cli/builds/lib/cli.jar $*
+#java -jar ./cli/builds/lib/cli.jar $*
+./cli/build/install/cli/bin/cli $*
