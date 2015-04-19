@@ -12,6 +12,8 @@ import br.com.brunodelima.socket.SocketClient;
  */
 public class SendLocationCommand extends PropertyCommand {
 
+    public static final int DEFAULT_PORT = 30123;
+
     public SendLocationCommand(Properties properties) {
         super("send (.++)", properties);
     }
@@ -29,7 +31,7 @@ public class SendLocationCommand extends PropertyCommand {
     }
 
     private String send(String selectedId, String message) throws IOException {
-        SocketClient client = new SocketClient(selectedId, 30123);
+        SocketClient client = new SocketClient(selectedId, DEFAULT_PORT);
         client.sendMessage(message);
         String response = client.reciveMessge();
         client.getSocket().close();

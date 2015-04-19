@@ -15,6 +15,7 @@ import br.com.brunodelima.socket.Broadcast;
 public class FindDevicesCommand extends PropertyCommand {
 
     public static final int DEFAULT_DELAY = 5000;
+    public static final int DEFAULT_PORT = 30122;
 
     public FindDevicesCommand(Properties properties) {
         super("(?:find|list)(?: (\\d+))?", properties);
@@ -38,7 +39,7 @@ public class FindDevicesCommand extends PropertyCommand {
     }
 
     private List<InetAddress> tryToFindDevices(int delay) throws IOException {
-        return Broadcast.getServerAdresses("locations", "230.0.0.1", 30122, delay);
+        return Broadcast.getServerAdresses("locations", "230.0.0.1", DEFAULT_PORT, delay);
     }
 
     private void print(List<InetAddress> addresses) {
