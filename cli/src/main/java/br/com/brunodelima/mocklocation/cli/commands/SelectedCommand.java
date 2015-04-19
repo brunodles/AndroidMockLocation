@@ -11,12 +11,12 @@ import br.com.brunodelima.mocklocation.cli.PropertyCommand;
 public class SelectedCommand extends PropertyCommand {
 
     public SelectedCommand(Properties properties) {
-        super("selected", properties);
+        super("(selected|show|ip)", properties);
     }
 
     @Override
     protected void run(ArrayList<String> matcher) {
-        print("Selected ip %s\n",properties.getSelectedId());
+        print("Selected ip %s\n",properties.getSelectedIp());
     }
 
     @Override
