@@ -10,9 +10,8 @@ import java.io.IOException;
  */
 public class Properties {
 
-    private static final String KEY_SELECTED = "selected";
     public static final String KEY_ADDRESS = "address-";
-
+    private static final String KEY_SELECTED = "selected";
     String filePath;
     java.util.Properties properties;
 
@@ -36,16 +35,21 @@ public class Properties {
         }
     }
 
-    public String getSelectedId() {
-        String addressKey = KEY_ADDRESS + properties.get(KEY_SELECTED);
-        return properties.getProperty(addressKey);
+    public String getSelectedIp() {
+        int selected = Integer.valueOf(properties.getProperty(KEY_SELECTED));
+        return getAddress(selected);
     }
 
     public void putAdress(int i, String hostAddress) {
-        properties.put(KEY_ADDRESS +i, hostAddress);
+        properties.put(KEY_ADDRESS + i, hostAddress);
     }
 
     public void setSelected(int index) {
         properties.put(KEY_SELECTED, String.valueOf(index));
+    }
+
+    public String getAddress(int index) {
+        String addressKey = KEY_ADDRESS + properties.get(index);
+        return properties.getProperty(addressKey);
     }
 }
