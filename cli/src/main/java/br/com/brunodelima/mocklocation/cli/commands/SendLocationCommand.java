@@ -18,10 +18,10 @@ public class SendLocationCommand extends PropertyCommand {
 
     @Override
     protected void run(ArrayList<String> matcher) {
-        String selectedId = properties.getSelectedId();
-        print("Send location to %s\n", selectedId);
+        String selectedIp = properties.getSelectedIp();
+        print("Send location to %s\n", selectedIp);
         try {
-            String result = send(selectedId, matcher.get(0));
+            String result = send(selectedIp, matcher.get(0));
             print(result);
         } catch (IOException e) {
             print("Can't send message " + e.getCause());
