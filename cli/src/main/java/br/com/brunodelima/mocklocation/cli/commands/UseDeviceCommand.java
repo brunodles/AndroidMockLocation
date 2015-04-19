@@ -17,7 +17,7 @@ public class UseDeviceCommand extends PropertyCommand {
     @Override
     protected void run(ArrayList<String> matcher) {
         int index = Integer.parseInt(matcher.get(0));
-        print("Selected ip %s\n",index);
+        print("Selected ip %s\n", properties.getAddress(index));
         properties.setSelected(index);
         properties.save();
     }
