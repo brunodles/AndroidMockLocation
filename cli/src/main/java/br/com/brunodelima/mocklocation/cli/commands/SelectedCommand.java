@@ -11,7 +11,7 @@ import br.com.brunodelima.mocklocation.cli.PropertyCommand;
 public class SelectedCommand extends PropertyCommand {
 
     public SelectedCommand(Properties properties) {
-        super("(selected|show|ip)", properties);
+        super("selected|show|ip", properties);
     }
 
     @Override
