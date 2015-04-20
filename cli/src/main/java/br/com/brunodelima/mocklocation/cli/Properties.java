@@ -12,6 +12,7 @@ public class Properties {
 
     public static final String KEY_ADDRESS = "address-";
     private static final String KEY_SELECTED = "selected";
+    private static final String KEY_SDK_PATH = "sdk_path";
     String filePath;
     java.util.Properties properties;
 
@@ -51,5 +52,13 @@ public class Properties {
     public String getAddress(int index) {
         String addressKey = KEY_ADDRESS + properties.get(index);
         return properties.getProperty(addressKey);
+    }
+
+    public String getSdkPath() {
+        return properties.getProperty(KEY_SDK_PATH);
+    }
+
+    public void setSdkPath(String path) {
+        properties.setProperty(KEY_SDK_PATH, path);
     }
 }
