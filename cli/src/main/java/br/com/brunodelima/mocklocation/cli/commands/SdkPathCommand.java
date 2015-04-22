@@ -28,6 +28,7 @@ public class SdkPathCommand extends PropertyCommand {
     }
 
     private void setPath(String param) {
+        System.out.printf("new sdkPath > %s\n", param);
         properties.setSdkPath(param);
         properties.save();
     }
