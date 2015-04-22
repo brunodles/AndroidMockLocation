@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import br.com.brunodelima.mocklocation.cli.commands.FindDevicesCommand;
 import br.com.brunodelima.mocklocation.cli.commands.HelpCommand;
+import br.com.brunodelima.mocklocation.cli.commands.SdkPathCommand;
 import br.com.brunodelima.mocklocation.cli.commands.SelectedCommand;
 import br.com.brunodelima.mocklocation.cli.commands.SendLocationCommand;
 import br.com.brunodelima.mocklocation.cli.commands.UseDeviceCommand;
@@ -28,6 +29,7 @@ public class CommandLineInterface implements Executable {
         addToChain(new UseDeviceCommand(properties));
         addToChain(new SendLocationCommand(properties));
         addToChain(new SelectedCommand(properties));
+        addToChain(new SdkPathCommand(properties));
         addToChain(helpCommand);
     }
 
