@@ -11,15 +11,35 @@ import br.com.brunodelima.mocklocation.cli.PropertyCommand;
 public class UseDeviceCommand extends PropertyCommand {
 
     public UseDeviceCommand(Properties properties) {
-        super("use (\\d+)", properties);
+        super("use (\\d+|local)", properties);
     }
 
     @Override
     protected void run(ArrayList<String> matcher) {
-        int index = Integer.parseInt(matcher.get(0));
-        print("Selected ip %s\n", properties.getAddress(index));
+        String s = matcher.get(0);
+        print(s);
+        if ("local".equalsIgnoreCase(s))
+            useLocal();
+        else
+            useIndex(Integer.parseInt(s));
+    }
+
+    private void useLocal() {
+        String ip = "127.0.0.1";
+        properties.putAdress(99, ip);
+        properties.setSelected(99);
+        properties.save();
+        printIp(ip);
+    }
+
+    private void useIndex(int index) {
         properties.setSelected(index);
         properties.save();
+        printIp(properties.getAddress(index));
+    }
+
+    private void printIp(String ip) {
+        print("Selected ip %s\n", ip);
     }
 
     @Override
