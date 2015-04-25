@@ -4,32 +4,40 @@ import java.util.ArrayList;
 
 import br.com.brunodelima.mocklocation.cli.Properties;
 import br.com.brunodelima.mocklocation.cli.PropertyCommand;
+import br.com.brunodelima.mocklocation.cli.checker.Ipv4Checker;
 
 /**
  * Created by bruno on 07/04/15.
  */
 public class UseDeviceCommand extends PropertyCommand {
 
+    public static final String COMMAND_REGEX = "use (\\d+|local|[\\d\\.]+)";
+
     public UseDeviceCommand(Properties properties) {
-        super("use (\\d+|local)", properties);
+        super(COMMAND_REGEX, properties);
     }
 
     @Override
     protected void run(ArrayList<String> matcher) {
         String s = matcher.get(0);
-        print(s);
-        if ("local".equalsIgnoreCase(s))
+        if (Ipv4Checker.isValid(s))
+            useIp(s);
+        else if ("local".equalsIgnoreCase(s))
             useLocal();
         else
             useIndex(Integer.parseInt(s));
     }
 
-    private void useLocal() {
-        String ip = "127.0.0.1";
+    private void useIp(String ip) {
         properties.putAdress(99, ip);
         properties.setSelected(99);
         properties.save();
         printIp(ip);
+    }
+
+    private void useLocal() {
+        String ip = "127.0.0.1";
+        useIp(ip);
     }
 
     private void useIndex(int index) {
