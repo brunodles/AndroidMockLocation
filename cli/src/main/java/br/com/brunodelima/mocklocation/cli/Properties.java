@@ -50,7 +50,7 @@ public class Properties {
     }
 
     public String getAddress(int index) {
-        String addressKey = KEY_ADDRESS + properties.get(index);
+        String addressKey = KEY_ADDRESS + index;
         return properties.getProperty(addressKey);
     }
 
