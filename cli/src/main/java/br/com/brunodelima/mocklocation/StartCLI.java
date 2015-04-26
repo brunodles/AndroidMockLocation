@@ -15,7 +15,8 @@ public class StartCLI {
     private static String buildCommand(String[] args) {
         StringBuilder builder = new StringBuilder();
         for (String arg : args)
-            builder.append(arg);
-        return builder.toString();
+            builder.append(arg)
+                    .append(" ");
+        return builder.toString().trim();
     }
 }
