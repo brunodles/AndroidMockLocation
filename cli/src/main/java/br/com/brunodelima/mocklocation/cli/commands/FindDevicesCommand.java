@@ -18,7 +18,7 @@ public class FindDevicesCommand extends PropertyCommand {
     public static final int DEFAULT_PORT = 30122;
 
     public FindDevicesCommand(Properties properties) {
-        super("(?:find|list)(?: (\\d+))?", properties);
+        super("find(?: (\\d+))?", properties);
     }
 
     @Override
