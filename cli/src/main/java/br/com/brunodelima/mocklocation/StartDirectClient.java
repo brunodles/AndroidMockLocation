@@ -11,20 +11,20 @@ import br.com.brunodelima.socket.SocketClient;
 /**
  * Created by bruno on 06/01/15.
  */
-public class StartOldClient {
+public class StartDirectClient {
 
-    private String ip = "192.168.25.81";
+    private String ip = "192.168.25.168";
     private int port = 30123;
 
     public static void main(String[] args) {
         System.out.println("Initializing");
-        StartOldClient startOldClient = new StartOldClient();
+        StartDirectClient startDirectClient = new StartDirectClient();
         try {
             System.out.println("Try to find devices");
-            startOldClient.findServer();
+            startDirectClient.findServer();
         } catch (Exception e) {
         }
-        startOldClient.console();
+        startDirectClient.console();
     }
 
     public void console() {
@@ -42,7 +42,7 @@ public class StartOldClient {
                 System.out.print(">");
                 input = scanner.nextLine();
                 response = sendMessage(input);
-                System.out.printf(" < %s\n", response);
+                System.out.println(response);
             } catch (IOException ex) {
                 ex.printStackTrace(System.err);
             }
