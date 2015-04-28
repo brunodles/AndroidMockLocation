@@ -41,8 +41,12 @@ class SocketBase {
     }
 
     public String reciveMessge() throws IOException {
-        final String line = in.readLine();
-        return line;
+        StringBuilder builder = new StringBuilder();
+        String line;
+        while ((line = in.readLine()) != null && !line.isEmpty())
+            builder.append(builder.length() > 0 ? "\n" : "")
+                    .append(line);
+        return builder.toString();
     }
 
     public void sendMessage(String message) throws IOException {
