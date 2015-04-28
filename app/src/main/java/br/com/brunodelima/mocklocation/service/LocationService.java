@@ -29,6 +29,10 @@ import br.com.brunodelima.socket.StringProtocol;
 public class LocationService extends Service {
 
     public static final String PROVIDER = "socket";
+    public static final int SOCKET_PORT = 30123;
+    public static final int BROADCAST_PORT = 30122;
+    public static final String BROADCAST_GROUP = "230.0.0.1";
+    public static final String BROADCAST_PASSWORD = "locations";
     private static final String TAG = "SocketService";
     //    public static final String PROVIDER = LocationManager.GPS_PROVIDER;
     private static final int NOTIFICATION_ID = 1000;
@@ -91,14 +95,14 @@ public class LocationService extends Service {
 
 //        protocol = new DummyProtocol();
         try {
-            socketServer = new SocketServer(30123, protocol);
+            socketServer = new SocketServer(SOCKET_PORT, protocol);
             socketServer.start();
             Log.d(TAG, "onCreate serverStarted");
         } catch (IOException e) {
             Log.e(TAG, "onCreate error on start socket server", e);
         }
         try {
-            broadcastServer = Broadcast.getNewServer("locations", "230.0.0.1", 30122);
+            broadcastServer = Broadcast.getNewServer(BROADCAST_PASSWORD, BROADCAST_GROUP, BROADCAST_PORT);
             broadcastServer.start();
         } catch (SocketException e) {
             Log.e(TAG, "onCreate error on start broadcast server", e);
