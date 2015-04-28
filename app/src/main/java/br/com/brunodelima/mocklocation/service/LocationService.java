@@ -16,6 +16,7 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.net.SocketException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,17 +44,19 @@ public class LocationService extends Service {
 
         @Override
         public String processMessage(String message) {
-            Location location = MessageResolver.resolveLocation(message);
-            if (location != null) {
-                try {
-                    locationManager.setTestProviderLocation(PROVIDER, location);
-                } catch (Exception e) {
-                    Log.e(TAG, "processMessage ", e);
-                }
-                return "Location Received.";
+            if (message.contains("locations")) {
+                return getAllLocations();
             } else {
-                return "Unknow message.";
+                Location location = MessageResolver.resolveLocation(message);
+                if (location != null)
+                    try {
+                        locationManager.setTestProviderLocation(PROVIDER, location);
+                        return "Location Received.";
+                    } catch (Exception e) {
+                        Log.e(TAG, "processMessage ", e);
+                    }
             }
+            return "Unknow message.";
         }
 
         @Override
@@ -76,6 +79,17 @@ public class LocationService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
             location.setElapsedRealtimeNanos(SystemClock.elapsedRealtime());
         return location;
+    }
+
+    private String getAllLocations() {
+        List<String> providers = locationManager.getAllProviders();
+        StringBuilder result = new StringBuilder();
+        for (String provider : providers) {
+            Location location = locationManager.getLastKnownLocation(provider);
+            if (location != null)
+                result.append(String.format("%10s %20s, %s\n", provider, location.getLatitude(), location.getLongitude()));
+        }
+        return result.toString();
     }
 
     @Override
