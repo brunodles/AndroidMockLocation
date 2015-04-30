@@ -93,7 +93,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override
