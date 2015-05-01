@@ -10,3 +10,7 @@ Android app to send mock location to real device through a service.
 ## Java Client
 * Find devices.
 * Send mock locations to those devices. (Locations or google maps url)
+
+
+## Soon
+* Interact with custom a map on client.
